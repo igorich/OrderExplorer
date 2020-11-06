@@ -1,49 +1,62 @@
 import * as React from 'react';
 import { Table, Tag, Space } from 'antd';
-import Order from '../types'
-import { OrderHttpService } from 'services/OrderHttpService';
+import Order from '../types/order'
+import { OrderHttpService } from '../services/orderHttpService';
 
-class OrderTable extends React.Component {
+interface IOrdersState {
+  orders: Order[];
+}
+
+class OrderTable extends React.Component<{}, IOrdersState> {
+	state: Readonly<IOrdersState> = {
+        orders: [],
+    }
+	
+	constructor(props: any) {
+		super(props);
+		
+		this.state = { orders: [] };
+	}
+	
+	async componentDidMount() {
+		this.setState({ orders: await OrderHttpService.getAllOrders() });
+	}
 
     render() {
 		const columns = [
 		  {
-			title: 'Name',
-			dataIndex: 'name',
-			key: 'name',
+			title: 'Sales Order Id',
+			dataIndex: 'salesOrderId',
+			key: 'salesOrderId',
 		  },
 		  {
-			title: 'Age',
-			dataIndex: 'age',
-			key: 'age',
+			title: 'Customer Id',
+			dataIndex: 'customerId',
+			key: 'customerId',
 		  },
 		  {
-			title: 'Address',
-			dataIndex: 'address',
-			key: 'address',
+			title: 'Comment',
+			dataIndex: 'comment',
+			key: 'comment',
 		  },
 		  {
-			title: 'Tags',
-			key: 'tags',
-			dataIndex: 'tags',
+			title: 'Order Date',
+			key: 'orderDate',
+			dataIndex: 'orderDate',
 		  },
 		  {
 			title: 'Action',
 			key: 'action',
 			render: (text: string, record: any) => (
 			  <Space size="middle">
-				<a>Редактировать</a>
-				<a>Открыть</a>
+				<a>PРµРґР°РєС‚РёСЂРѕРІР°С‚СЊ</a>
+				<a>OС‚РєСЂС‹С‚СЊ</a>
 			  </Space>
 			),
 		  },
 		];
 
-		const data = orderService.getAllOrders()
-			.then((response: Order[]) => {
-				this.setState({orders: response});
-			})
-			.catch(() => console.log('Failed to update orders list'));
+		const data = this.state.orders;
 
         return (
             <Table columns={columns} dataSource={data} />

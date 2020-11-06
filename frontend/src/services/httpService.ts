@@ -1,5 +1,5 @@
-declare var SERVICE_URL: string;
-const CONNECTION_STRING = `${SERVICE_URL}/api/`;
+declare var VACATION_SERVICE_URL: string;
+const CONNECTION_STRING = `localhost:1650/api/`;
 
 export const HttpService = {
     async get(url: string, params?: object, responseType: string = '') {
@@ -50,10 +50,6 @@ export const HttpService = {
                 const clone = response.clone();
                 return await clone.blob();
             } catch (err) {
-                const config: NotificationConfig = {
-                    message: 'Error during downloading report',
-                    description: err,
-                };
             }
         }
 
@@ -64,7 +60,7 @@ export const HttpService = {
             return await JSON.stringify(response);
         }
     },
-    getUrlParam(params: object): string {
+    getUrlParam(params: any): string {
         const keys = Object.keys(params);
         if (!keys.length) {
             return '';

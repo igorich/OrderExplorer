@@ -1,5 +1,8 @@
-import { Order, OrderDetails } from 'src/types';
+import Order from '../types/order';
+import OrderDetails from '../types/orderDetails';
 import { HttpService } from './httpService';
+// import { axios, AxiosResponse } from 'axios';
+import axios from 'axios';
 
 export const OrderHttpService = {
     async getOrderDetails(): Promise<OrderDetails> {
@@ -8,7 +11,16 @@ export const OrderHttpService = {
 
 
     async getAllOrders(): Promise<Order[]> {
-        return Promise.resolve([
+		return await axios.get('http://localhost:1650/api/orders');
+			/*.then((response: Order[])  => {
+				console.log(response);
+				return response;
+			})
+			.catch(function (error: any) {
+				// handle error
+				console.log(error);
+			});*/
+        /*return Promise.resolve([
 			{
 				salesOrderId: 1,
 				customerId: 1,
@@ -30,6 +42,6 @@ export const OrderHttpService = {
 				comment: 'comment 3',
 				orderDate: '03.01.1970',
 			},
-		]);
+		]);*/
     }
 }
