@@ -23,7 +23,7 @@ namespace CNAM.Services
                 {
                     Comment = o.Comment,
                     OrderDate = o.OrderDate,
-                    CustomerName = "",
+                    CustomerName = o.Customer.Name,
                     OrderId = o.OrderId,
                     SalesStatus = o.SalesStatus,
                 })
