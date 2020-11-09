@@ -12,7 +12,7 @@ namespace CNAM.Models
         public DateTime OrderDate { set; get; }
 
         [Required]
-        public SalesStatus SalesStatus { set; get; }
+        public SalesStatusEnum SalesStatus { set; get; }
 
         [Required]
         public Customer Customer { set; get; }

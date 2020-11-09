@@ -1,7 +1,6 @@
 import Order from '../types/order';
 import OrderDetails from '../types/orderDetails';
 import { HttpService } from './httpService';
-// import { axios, AxiosResponse } from 'axios';
 import axios from 'axios';
 
 export const OrderHttpService = {
@@ -9,9 +8,9 @@ export const OrderHttpService = {
         return HttpService.get(`ENTITY/pendingVacations`);
     },
 
-
     async getAllOrders(): Promise<Order[]> {
-		return await axios.get('http://localhost:1650/api/orders');
+		const response = await axios.get('http://localhost:5000/api/orders');
+		return response.data;
 			/*.then((response: Order[])  => {
 				console.log(response);
 				return response;

@@ -1,12 +1,11 @@
-﻿using System;
+﻿using CNAM.DTO;
+using CNAM.Models;
+using CNAM.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using CNAM;
-using CNAM.Models;
 
 namespace CNAM.Controllers
 {
@@ -15,17 +14,19 @@ namespace CNAM.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly CnamDbContext _context;
+        private readonly OrderDataService _orderDataService;
 
-        public OrdersController(CnamDbContext context)
+        public OrdersController(CnamDbContext context, OrderDataService orderDataService)
         {
+            _orderDataService = orderDataService;
             _context = context;
         }
 
         // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        public async Task<ActionResult<List<OrderDTO>>> GetOrders()
         {
-            return await _context.Orders.ToListAsync();
+            return await _orderDataService.GetAllOrders();
         }
 
         // GET: api/Orders/5
@@ -35,9 +36,7 @@ namespace CNAM.Controllers
             var order = await _context.Orders.FindAsync(id);
 
             if (order == null)
-            {
                 return NotFound();
-            }
 
             return order;
         }
